@@ -12,32 +12,32 @@ window.onload = function () {
 
 
 
-  if(document.getElementById("btnModal")){
+  if (document.getElementById("btnModal")) {
     var modal = document.getElementById("tvesModal");
     var btn = document.getElementById("btnModal");
     var span = document.getElementsByClassName("close")[0];
     var body = document.getElementsByTagName("body")[0];
-  
-    btn.onclick = function() {
+
+    btn.onclick = function () {
       modal.style.display = "block";
-  
+
       body.style.position = "static";
       body.style.height = "100%";
       body.style.overflow = "hidden";
     }
-  
-    span.onclick = function() {
+
+    span.onclick = function () {
       modal.style.display = "none";
-  
+
       body.style.position = "inherit";
       body.style.height = "auto";
       body.style.overflow = "visible";
     }
-  
-    window.onclick = function(event) {
+
+    window.onclick = function (event) {
       if (event.target == modal) {
         modal.style.display = "none";
-  
+
         body.style.position = "inherit";
         body.style.height = "auto";
         body.style.overflow = "visible";
@@ -57,7 +57,7 @@ function seleccionarJugadores() {
 }
 
 function nuevaPartida() {
-  document.formulario.opcionPartida.value="nueva";
+  document.formulario.opcionPartida.value = "nueva";
   document.getElementById("formulario").style.display = "block";
   document.getElementById("guardadas").style.display = "none";
   document.getElementById("jugadores").style.display = "block";
@@ -75,13 +75,13 @@ function inicializarTablero(cantJugadores) {
   var m, n;
   document.getElementById("resultado").innerText = "";
   turno = "J1";
-  if (timer!=null){clearTimeout(timer);}
-  tiempoJ1.innerText="00:00";
-  tiempoJ2.innerText="00:00";
-  tiempoJ3.innerText="00:00";
-  contadorJugador1=0;
-  contadorJugador2=0;
-  contadorJugador3=0;
+  if (timer != null) { clearTimeout(timer); }
+  tiempoJ1.innerText = "00:00";
+  tiempoJ2.innerText = "00:00";
+  tiempoJ3.innerText = "00:00";
+  contadorJugador1 = 0;
+  contadorJugador2 = 0;
+  contadorJugador3 = 0;
   partidas = localStorage.getItem("partidas" + document.formulario.cantJugadores.value);
   partidas = JSON.parse(partidas);
   document.getElementById("comenzar").disabled = false;
@@ -131,7 +131,7 @@ function inicializarTablero(cantJugadores) {
       contenido = document.createElement("div");
       contenido.className = "hueco";
       contenido.id = "celda" + i + j;
-      contenido.innerText = i + "-" + j;
+      //contenido.innerText = i + "-" + j;
       celda.appendChild(contenido);
       fila.appendChild(celda);
       // agrega la fila al cuerpo de la tabla
@@ -226,7 +226,7 @@ function guardarPartida() {
   var partida = new Object;
   var f = new Date;
   partida.fecha = f.getFullYear() + "-" + agregarCero(f.getMonth() + 1) + "-" + agregarCero(f.getDate()) + " " + agregarCero(f.getHours()) + ":" + agregarCero(f.getMinutes()) + ":" + agregarCero(f.getSeconds());
-  partida.jugador1 = (document.formulario.nombreJugador1.value=="")?"Jugador 1":document.formulario.nombreJugador1.value;
+  partida.jugador1 = (document.formulario.nombreJugador1.value == "") ? "Jugador 1" : document.formulario.nombreJugador1.value;
   partida.jugador2 = document.formulario.nombreJugador2.value;
   partida.tiempoJugador1 = contadorJugador1;
   partida.tiempoJugador2 = contadorJugador2;
@@ -268,14 +268,8 @@ function insertarFicha(e) {
       var hueco = document.getElementById(celda);
       if (hueco.className == "hueco") {
         hueco.className = turno;
-        hueco.style.backgroundColor=document.getElementById("colorJugador"+turno.substring(1)).value;
-        //verifico si termino el juego con ganador o empate
-        //alert(verificar(i, 1, "horizontal",(document.formulario.cantJugadores.value==2)?7:10));
-/*         var finHorizontal = verificarHV(i, 1, "horizontal", (document.formulario.cantJugadores.value == 2) ? 7 : 10);
-        var finVertical = verificarHV(1, i, "vertical", (document.formulario.cantJugadores.value == 2) ? 6 : 9);//"ninguno";//verificar(columna, 1, "vertical");
-        var finDiagonal = verificarDiagonal(i, columna); */
-        /*var finDiagonalArriba=verificar(columna,i,"diagonalArriba"); */
-        if (verificar(i,columna)) {
+        hueco.style.backgroundColor = document.getElementById("colorJugador" + turno.substring(1)).value;
+        if (verificar(i, columna)) {
           document.getElementById("resultado").innerHTML = "Ganador " + document.getElementById("nombre" + turno).innerText + "!!!";
           clearTimeout(timer);
           break;
@@ -286,7 +280,7 @@ function insertarFicha(e) {
           clearTimeout(timer);
           break;
         }
-               
+
         asignarTurno(turno);
         break;
       }
@@ -304,14 +298,14 @@ function asignarTurno(t) {
   else {
     turno = "J3";
   }
-  document.getElementById("jugador1").style.borderColor = (turno=="J1")?document.formulario.colorJugador1.value:"transparent";
-  document.getElementById("jugador2").style.borderColor = (turno=="J2")?document.formulario.colorJugador2.value:"transparent";
-  document.getElementById("jugador3").style.borderColor = (turno=="J3")?document.formulario.colorJugador3.value:"transparent";
+  document.getElementById("jugador1").style.borderColor = (turno == "J1") ? document.formulario.colorJugador1.value : "transparent";
+  document.getElementById("jugador2").style.borderColor = (turno == "J2") ? document.formulario.colorJugador2.value : "transparent";
+  document.getElementById("jugador3").style.borderColor = (turno == "J3") ? document.formulario.colorJugador3.value : "transparent";
 }
 
 function verificar(fila, columna) {
   var cantidad = 0;
-  var i,j,celda;
+  var i, j, celda;
   for (var i = 1; i <= ((document.formulario.cantJugadores.value == 2) ? 7 : 10) && cantidad < 4; i++) {
     celda = "celda" + fila + i;
     if (document.getElementById(celda).className == turno) {
@@ -358,7 +352,7 @@ function verificar(fila, columna) {
     i = fila + 3;
     j = columna - 3;
     while (i > fila - 4 && j < columna + 4 && cantidad < 4) {
-      if (i > 0 && i <= ((document.formulario.cantJugadores.value == 2) ? 6 : 9) && j>0 && j <= ((document.formulario.cantJugadores.value == 2) ? 7 : 10)) {
+      if (i > 0 && i <= ((document.formulario.cantJugadores.value == 2) ? 6 : 9) && j > 0 && j <= ((document.formulario.cantJugadores.value == 2) ? 7 : 10)) {
         if (document.getElementById("celda" + i + j).className == turno) { cantidad++; }
         else { cantidad = 0; }
       }
@@ -374,7 +368,7 @@ function comenzar() {
   document.getElementById("comenzar").disabled = true;
   document.getElementById("reiniciar").disabled = false;
   document.getElementById("guardar").disabled = false;
-  if (document.formulario.cantJugadores.value==3){
+  if (document.formulario.cantJugadores.value == 3) {
 
   }
   for (boton of botones) {
@@ -403,15 +397,15 @@ function onclickHandler() {
   if (partidas != null) {
     partidas.forEach(partida => {
       if (partida.fecha == this.childNodes[0].innerText) {
-        turno=partida.turno;
+        turno = partida.turno;
         document.getElementById("nombreJugador1").value = partida.jugador1;
         document.getElementById("nombreJugador2").value = partida.jugador2;
         document.getElementById("nombreJ1").innerText = partida.jugador1;
         document.getElementById("nombreJ2").innerText = partida.jugador2;
         document.getElementById("tiempoJ1").innerText = partida.tiempoJugador1;
         document.getElementById("tiempoJ2").innerText = partida.tiempoJugador2;
-        contadorJugador1=partida.tiempoJugador1;
-        contadorJugador2=partida.tiempoJugador2;
+        contadorJugador1 = partida.tiempoJugador1;
+        contadorJugador2 = partida.tiempoJugador2;
         var minutos = parseInt(contadorJugador1 / 60);
         var segundos = contadorJugador1 % 60;
         document.getElementById("tiempoJ1").innerHTML = agregarCero(minutos) + ":" + agregarCero(segundos);
@@ -420,29 +414,29 @@ function onclickHandler() {
         document.getElementById("tiempoJ2").innerHTML = agregarCero(minutos) + ":" + agregarCero(segundos);
         document.getElementById("colorJugador1").value = partida.colorJugador1;
         document.getElementById("colorJugador2").value = partida.colorJugador2;
-        document.getElementById("jugador1").style.borderColor = (turno=="J1")?partida.colorJugador1:"transparent";
-        document.getElementById("jugador2").style.borderColor = (turno=="J2")?partida.colorJugador2:"transparent";
+        document.getElementById("jugador1").style.borderColor = (turno == "J1") ? partida.colorJugador1 : "transparent";
+        document.getElementById("jugador2").style.borderColor = (turno == "J2") ? partida.colorJugador2 : "transparent";
         if (document.formulario.cantJugadores.value == 3) {
           document.getElementById("nombreJugador3").value = partida.jugador3;
           document.getElementById("nombreJ3").innerText = partida.jugador3;
-          contadorJugador3=partida.tiempoJugador3;
+          contadorJugador3 = partida.tiempoJugador3;
           minutos = parseInt(contadorJugador3 / 60);
           segundos = contadorJugador3 % 60;
-          document.getElementById("tiempoJ3").innerHTML = agregarCero(minutos) + ":" + agregarCero(segundos);  
+          document.getElementById("tiempoJ3").innerHTML = agregarCero(minutos) + ":" + agregarCero(segundos);
           document.getElementById("colorJugador3").value = partida.colorJugador3;
-          document.getElementById("jugador3").style.borderColor = (turno=="J3")?partida.colorJugador3:"transparent";
+          document.getElementById("jugador3").style.borderColor = (turno == "J3") ? partida.colorJugador3 : "transparent";
           for (celda of partida.jugadasJugador3) {
             document.getElementById(celda).className = "J3";
-            document.getElementById(celda).style.backgroundColor=partida.colorJugador3;
+            document.getElementById(celda).style.backgroundColor = partida.colorJugador3;
           }
         }
         for (celda of partida.jugadasJugador1) {
           document.getElementById(celda).className = "J1";
-          document.getElementById(celda).style.backgroundColor=partida.colorJugador1;
+          document.getElementById(celda).style.backgroundColor = partida.colorJugador1;
         }
         for (celda of partida.jugadasJugador2) {
           document.getElementById(celda).className = "J2";
-          document.getElementById(celda).style.backgroundColor=partida.colorJugador2;
+          document.getElementById(celda).style.backgroundColor = partida.colorJugador2;
         }
       }
     });
@@ -483,6 +477,6 @@ function incrementarTiempo() {
   document.getElementById("tiempo" + turno).innerHTML = agregarCero(minutos) + ":" + agregarCero(segundos);
 }
 
-function enviarEmail(){
-  document.location = "mailto:"+"tito@juan.com"+"?subject="+"Contacto"+"&body="+"Email: " + document.getElementById("email").value + "\\\nMensaje: " + document.getElementById("mensaje").value;
-  }
+function enviarEmail() {
+  document.location = "mailto:" + "maximedina@gmail.com" + "?cc=" + document.getElementById("email").value + "&subject=" + "Contacto" + "&body=" + document.getElementById("mensaje").value;
+}

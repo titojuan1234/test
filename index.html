@@ -24,26 +24,31 @@
         partida</input>
         <input type="radio" name="opcionPartida" id="opcionGuardadas" value="guardadas"
           onclick="partidasGuardadas()">Cargar partida</input>
-      <div id="jugadores">
-        <div class="nombres" id="nombreJug1"><input type="text" id="nombreJugador1" minlength="3" maxlength="14"
-            placeholder="Nombre jugador 1" size="11" oninput="document.getElementById('nombreJ1').innerText=this.value;"></input><input type="color" id="colorJugador1"
-            value="#D13D3D" oninput="document.getElementById('jugador1').style.borderColor=this.value;"></input></div>
-        <div class="nombres" id="nombreJug2"><input type="text" id="nombreJugador2" minlength="3" maxlength="14"
-            placeholder="Nombre jugador 2" size="11" oninput="document.getElementById('nombreJ2').innerText=this.value;"></input><input type="color" id="colorJugador2"
-            value="#FFD966"></input></div>
-        <div class="nombres" id="nombreJug3" style="display: none;">
-          <input type="text" id="nombreJugador3" minlength="3" maxlength="14" placeholder="Nombre jugador 3"
-            size="11" oninput="document.getElementById('nombreJ3').innerText=this.value;"></input><input type="color" id="colorJugador3" value="#44546A"></input>
+        <div id="jugadores">
+          <div class="nombres" id="nombreJug1"><input type="text" id="nombreJugador1" minlength="3" maxlength="14"
+              placeholder="Nombre jugador 1" size="11"
+              oninput="document.getElementById('nombreJ1').innerText=this.value;"></input><input type="color"
+              id="colorJugador1" value="#D13D3D"
+              oninput="document.getElementById('jugador1').style.borderColor=this.value;"></input></div>
+          <div class="nombres" id="nombreJug2"><input type="text" id="nombreJugador2" minlength="3" maxlength="14"
+              placeholder="Nombre jugador 2" size="11"
+              oninput="document.getElementById('nombreJ2').innerText=this.value;"></input><input type="color"
+              id="colorJugador2" value="#FFD966"></input></div>
+          <div class="nombres" id="nombreJug3" style="display: none;">
+            <input type="text" id="nombreJugador3" minlength="3" maxlength="14" placeholder="Nombre jugador 3" size="11"
+              oninput="document.getElementById('nombreJ3').innerText=this.value;"></input><input type="color"
+              id="colorJugador3" value="#44546A"></input>
+          </div>
+        </div>
+        <div id="guardadas" style="display: none;">
+          <table id="tablaPartidasGuardadas">
+            <thead id="columnas">
+            </thead>
+            <tbody id="detalle"></tbody>
+          </table>
         </div>
       </div>
-      <div id="guardadas" style="display: none;">
-        <table id="tablaPartidasGuardadas">
-          <thead id="columnas">
-          </thead>
-          <tbody id="detalle"></tbody>
-        </table>
-      </div>
-    </div>
+
     </form>
     <div id="botones">
       <button type="button" id="comenzar" onclick="comenzar()">Iniciar</button>
@@ -64,7 +69,7 @@
         <div id="tiempoJ3">00:00</div>
       </div>
     </div>
-        <div id="resultado"></div>
+    <div id="resultado"></div>
     <div>
       <table>
         <thead id="flechas"></thead>
@@ -80,21 +85,21 @@
   <div id="tvesModal" class="modalContainer">
     <div class="modal-content">
       <span class="close">×</span>
-      <form id="formulario" action="#">
-        <div id="titulo">
-          <label>Contacto</label>
+      <form id="formulario" action="#" onsubmit="enviarEmail()">
+        <div id="tituloContacto">
+          Contacto
         </div>
         <div class="linea">
-            <input type="text" id="nombre" name="nombre" placeholder="Nombre"/><!-- pattern="[A-Za-z0-9]" /> -->
+          <input type="text" id="nombre" name="nombre" class="contacto" placeholder="Nombre" required/><!-- pattern="[A-Za-z0-9]" /> -->
         </div>
         <div class="linea">
-            <input type="email" id="email" name="email" placeholder="Email"/>
+          <input type="email" id="email" name="email" class="contacto" placeholder="Email" required/>
         </div>
         <div class="linea">
-            <textarea name="mensaje" id="mensaje" cols="20" rows="5" minlength="6" placeholder="Mensaje"></textarea>
+          <textarea name="mensaje" id="mensaje" cols="20" rows="5" class="contacto" minlength="6" placeholder="Mensaje" required></textarea>
         </div>
         <div class="linea">
-          <button type="submit" onclick="enviarEmail()">Enviar</button>
+          <button type="submit">Enviar</button>
         </div>
       </form>
 
