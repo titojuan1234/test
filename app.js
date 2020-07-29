@@ -188,10 +188,10 @@ function partidasGuardadas() {
 }
 
 function comenzarPartida() {
-  if ((document.formulario.nombreJugador1.value.length > 0 && document.formulario.nombreJugador1.value.length < 3) ||
-      (document.formulario.nombreJugador2.value.length > 0 && document.formulario.nombreJugador2.value.length < 3) ||
-      (document.formulario.cantJugadores.value == 3 && (document.formulario.nombreJugador3.value.length > 0 && document.formulario.nombreJugador3.value.length <3))) {
-    alert("El nombre de jugador debe contener entre 3 y 14 caracteres (si es vacío toma por defecto el nro de jugador).");
+  if (document.formulario.nombreJugador1.value.length < 3 ||
+      document.formulario.nombreJugador2.value.length < 3 ||
+      (document.formulario.cantJugadores.value == 3 && document.formulario.nombreJugador3.value.length <3)) {
+    alert("El nombre de jugador debe contener entre 3 y 14 caracteres.");
   }
   else {
     var botones = document.getElementsByClassName("flecha");
