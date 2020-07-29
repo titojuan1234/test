@@ -267,7 +267,7 @@ function insertarFicha(e) {
         }
         var huecos = document.getElementsByClassName("hueco");
         if (huecos.length == 0) {
-          document.getElementById("resultado").innerHTML = "No mas fichas disponibles. Empate!";
+          document.getElementById("resultado").innerHTML = "No quedan fichas disponibles. Empate!";
           clearTimeout(timer);
           break;
         }
