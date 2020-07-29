@@ -48,10 +48,9 @@
           </table>
         </div>
       </div>
-
     </form>
     <div id="botones">
-      <button type="button" id="comenzar" onclick="comenzar()">Iniciar</button>
+      <button type="button" id="comenzar" onclick="comenzarPartida()">Iniciar</button>
       <button type="button" id="guardar" onclick="guardarPartida()" disabled>Guardar</button>
       <button type="button" id="reiniciar" onclick="nuevaPartida()" disabled>Reiniciar</button>
     </div>
@@ -78,10 +77,6 @@
     </div>
   </div>
 
-
-
-
-  <!-- <button id="btnModal">Abrir modal</button> -->
   <div id="tvesModal" class="modalContainer">
     <div class="modal-content">
       <span class="close">×</span>
@@ -90,26 +85,21 @@
           Contacto
         </div>
         <div class="linea">
-          <input type="text" id="nombre" name="nombre" class="contacto" placeholder="Nombre" required/><!-- pattern="[A-Za-z0-9]" /> -->
+          <input type="text" id="nombre" name="nombre" class="contacto" placeholder="Nombre" required />
         </div>
         <div class="linea">
-          <input type="email" id="email" name="email" class="contacto" placeholder="Email" required/>
+          <input type="email" id="email" name="email" class="contacto" placeholder="Email" required />
         </div>
         <div class="linea">
-          <textarea name="mensaje" id="mensaje" cols="20" rows="5" class="contacto" minlength="6" placeholder="Mensaje" required></textarea>
+          <textarea name="mensaje" id="mensaje" cols="20" rows="5" class="contacto" minlength="6" placeholder="Mensaje"
+            required></textarea>
         </div>
         <div class="linea">
           <button type="submit">Enviar</button>
         </div>
       </form>
-
-
-
     </div>
   </div>
-
-
-
 </body>
 
 </html>

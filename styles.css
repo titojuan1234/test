@@ -1,6 +1,7 @@
 #tablaPartidasGuardadas{
 width: 100%;
 }
+
 .tGuardadas {
   padding: 5px;
   cursor: pointer;
@@ -24,6 +25,7 @@ body {
   font-weight: bold;
   color: #ffffff;
 }
+
 #marco {
   background-image: url("imagenes/fondo.jpg");
   width: fit-content; /* 380px; */

@@ -3,29 +3,21 @@ var contadorJugador1 = 0;
 var contadorJugador2 = 0;
 var contadorJugador3 = 0;
 var timer;
+var seleccionado = null;
 
 window.onload = function () {
-  var test = new Date;
-  //alert(test);
   nuevaPartida();
-  //  alert(test);
-
-
-
   if (document.getElementById("btnModal")) {
     var modal = document.getElementById("tvesModal");
     var btn = document.getElementById("btnModal");
     var span = document.getElementsByClassName("close")[0];
     var body = document.getElementsByTagName("body")[0];
-
     btn.onclick = function () {
       modal.style.display = "block";
-
       body.style.position = "static";
       body.style.height = "100%";
       body.style.overflow = "hidden";
     }
-
     span.onclick = function () {
       modal.style.display = "none";
 
@@ -33,7 +25,6 @@ window.onload = function () {
       body.style.height = "auto";
       body.style.overflow = "visible";
     }
-
     window.onclick = function (event) {
       if (event.target == modal) {
         modal.style.display = "none";
@@ -44,16 +35,6 @@ window.onload = function () {
       }
     }
   }
-
-
-
-
-
-}
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-function seleccionarJugadores() {
-  //(document.formulario.opcionPartida.value == "nueva") ? nuevaPartida() : partidasGuardadas();
 }
 
 function nuevaPartida() {
@@ -61,7 +42,6 @@ function nuevaPartida() {
   document.getElementById("formulario").style.display = "block";
   document.getElementById("guardadas").style.display = "none";
   document.getElementById("jugadores").style.display = "block";
-  //alert(document.formulario.cantJugadores.value);
   inicializarTablero(document.formulario.cantJugadores.value);
   if (document.formulario.cantJugadores.value == 3) {
     document.getElementById("nombreJug3").style.display = "inline-flex";
@@ -118,10 +98,8 @@ function inicializarTablero(cantJugadores) {
     contenido = document.createElement("div");
     contenido.className = "flecha";
     contenido.id = "columna" + j;
-    //contenido.addEventListener("click", function (e) { insertarFicha(e) });
     celda.appendChild(contenido);
     fila.appendChild(celda);
-    // agrega la fila al cuerpo de la tabla
     encabezado.appendChild(fila);
   }
   for (i = 1; i <= m; i++) {
@@ -134,7 +112,6 @@ function inicializarTablero(cantJugadores) {
       //contenido.innerText = i + "-" + j;
       celda.appendChild(contenido);
       fila.appendChild(celda);
-      // agrega la fila al cuerpo de la tabla
       cuerpo.appendChild(fila);
     }
   }
@@ -150,7 +127,6 @@ function partidasGuardadas() {
   var partidas;
   document.getElementById("guardadas").style.display = "block";
   document.getElementById("jugadores").style.display = "none";
-
   var columnas = document.getElementById('columnas');
   vaciar(columnas);
   var fila = document.createElement('tr');
@@ -172,16 +148,11 @@ function partidasGuardadas() {
   celda.innerText = "Turno";
   fila.appendChild(celda);
   columnas.appendChild(fila);
-
-  //condiciones iniciales de fichas azules
-  // inicializarFichas
   partidas = localStorage.getItem("partidas" + document.formulario.cantJugadores.value);
   partidas = JSON.parse(partidas);
-  //obtengo el cuerpo de la tabla
   if (partidas != null) {
     var cuerpo = document.getElementById('detalle');
     vaciar(cuerpo);
-    // recorro la lista de empleados, creo una fila de tabla por cada registro y una celda por cada atributo del json
     partidas.forEach(partida => {
       var fila = document.createElement('tr');
       fila.onclick = onclickHandler;
@@ -205,22 +176,43 @@ function partidasGuardadas() {
       celda.appendChild(document.createTextNode(partida.turno));
       fila.appendChild(celda);
       celda = document.createElement('td');
-      var btn = document.createElement("button");   // Create a <button> element
+      var btn = document.createElement("button");
       btn.innerHTML = "X";
       btn.type = "button";
-      //btn.onclick = eliminar;                   // Insert text
-      btn.addEventListener("click", function (e) { eliminar(this.parentElement.parentElement) });//function (e) { insertarFicha(e) }) //.onclick=alert("hoalfe");
+      btn.addEventListener("click", function (e) { eliminar(this.parentElement.parentElement) });
       celda.appendChild(btn);
       fila.appendChild(celda);
-
-      // agrega la fila al cuerpo de la tabla
       cuerpo.appendChild(fila);
     });
   }
 }
+
+function comenzarPartida() {
+  if ((document.formulario.nombreJugador1.value.length > 0 && document.formulario.nombreJugador1.value.length < 3) ||
+      (document.formulario.nombreJugador2.value.length > 0 && document.formulario.nombreJugador2.value.length < 3) ||
+      (document.formulario.cantJugadores.value == 3 && (document.formulario.nombreJugador3.value.length > 0 && document.formulario.nombreJugador3.value.length <3))) {
+    alert("El nombre de jugador debe contener entre 3 y 14 caracteres (si es vacío toma por defecto el nro de jugador).");
+  }
+  else {
+    var botones = document.getElementsByClassName("flecha");
+    document.getElementById("comenzar").disabled = true;
+    document.getElementById("reiniciar").disabled = false;
+    document.getElementById("guardar").disabled = false;
+    /*   if (document.formulario.cantJugadores.value == 3) {
+    
+      } */
+    for (boton of botones) {
+      boton.addEventListener("click", function (e) { insertarFicha(e) });
+    }
+    document.getElementById("formulario").style.display = "none";
+    timer = setInterval(incrementarTiempo, 1000);
+  }
+}
+
 function agregarCero(nro) {
   return (nro < 10) ? "0" + nro : nro;
 }
+
 function guardarPartida() {
   var partidas = [];
   var partida = new Object;
@@ -262,7 +254,6 @@ function insertarFicha(e) {
     var columna = e.target.id.substring(7);
     var hueco, celda;
     var i = (document.formulario.cantJugadores.value == 2) ? 6 : 9;
-    //verificar en toda la columna la posicion y el color a ocupar 
     for (i; i > 0; i--) {
       var celda = "celda" + i + columna;
       var hueco = document.getElementById(celda);
@@ -280,7 +271,6 @@ function insertarFicha(e) {
           clearTimeout(timer);
           break;
         }
-
         asignarTurno(turno);
         break;
       }
@@ -362,23 +352,6 @@ function verificar(fila, columna) {
   }
   return (cantidad == 4) ? true : false;
 }
-
-function comenzar() {
-  var botones = document.getElementsByClassName("flecha");
-  document.getElementById("comenzar").disabled = true;
-  document.getElementById("reiniciar").disabled = false;
-  document.getElementById("guardar").disabled = false;
-  if (document.formulario.cantJugadores.value == 3) {
-
-  }
-  for (boton of botones) {
-    boton.addEventListener("click", function (e) { insertarFicha(e) });
-  }
-  document.getElementById("formulario").style.display = "none";
-  timer = setInterval(incrementarTiempo, 1000);
-}
-
-var seleccionado = null;            //contiene la fila seleccionada
 
 function onclickHandler() {
   if (seleccionado == this) {
